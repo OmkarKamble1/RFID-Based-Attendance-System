@@ -1,5 +1,6 @@
 #include <SPI.h>
 #include <MFRC522.h>
+#include <SoftwareSerial.h>
 
 #define SS_PIN 10
 #define RST_PIN 9
@@ -7,9 +8,11 @@
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 MFRC522::MIFARE_Key key;
 
+SoftwareSerial ArduinoUno(3,2);
+
 void setup() {
   Serial.begin(9600);
-
+  ArduinoUno.begin(4800);
   for (byte i = 0; i < 6; i++) key.keyByte[i] = 0xFF;
 
   SPI.begin();
@@ -35,7 +38,9 @@ void loop() {
   }
   Serial.println();
 
-  readBlock();
+  String readData = readBlock();
+  Serial.println(readData);
+  ArduinoUno.println(readData);
 
   mfrc522.PICC_HaltA();
   mfrc522.PCD_StopCrypto1();
@@ -44,7 +49,7 @@ void loop() {
 
 }
 
-void readBlock() {
+String readBlock() {
   byte buffersize = 18;
   byte readbackblock[18];
   byte status = mfrc522.PCD_Authenticate(MFRC522::PICC_CMD_MF_AUTH_KEY_A, blockNumber, &key, &(mfrc522.uid));
@@ -52,7 +57,7 @@ void readBlock() {
   if (status != MFRC522::STATUS_OK) {
     Serial.print("Authentication failed: ");
     Serial.println(mfrc522.GetStatusCodeName(status));
-    return 3;
+    return;
   }
 
   status = mfrc522.MIFARE_Read(blockNumber, readbackblock, &buffersize);
@@ -60,7 +65,7 @@ void readBlock() {
   if (status != MFRC522::STATUS_OK) {
     Serial.print("Read failed: ");
     Serial.println(mfrc522.GetStatusCodeName(status));
-    return 4;
+    return;
   }
   
   String value = "";
@@ -72,6 +77,7 @@ void readBlock() {
   Serial.print("DATA: ");
   Serial.print(value);
   Serial.println();
+  return value;
 }
 
 
