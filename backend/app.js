@@ -10,8 +10,9 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
   const name = req.query.name;
-  console.log('Received:', name);
-  res.status(200).send('Request body received successfully');
+  res.status(200).json({
+	query: req.query
+  });
 });
 
 app.listen(port, () => {
