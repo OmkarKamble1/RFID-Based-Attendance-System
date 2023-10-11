@@ -73,6 +73,7 @@ void sendGetReq2(String uid) {
 
 void sendPostReq(String uid) {
   https.addHeader("Content-Type", "application/x-www-form-urlencoded");
+  String postData = "uid=" + uid;
   int httpResponseCode = https.POST(postData);
   String response = https.getString();
 
