@@ -13,7 +13,7 @@ const char* password = "ertiga@8789";
 const char* server = "127.0.0.1";
 const int port = 3000;
 
-const char* serverURL = "https://rfid-based-attendance-system-backend.onrender.com/?uid=";
+const String serverURL = "https://rfid-based-attendance-system-backend.onrender.com";
 
 void setup() {
 
@@ -38,79 +38,80 @@ void setup() {
   Serial.println("Connected to WiFi");
 
   client.setInsecure();
-
+  https.begin(client, serverURL);
   Serial.println("NodeMCU Ready !");
 }
 
 String receivedData = "";
 
 void loop() {
-  // if(NodeMCU.available() > 0){
-  //   char data = NodeMCU.read();
-  //   Serial.print(data);
-  //   if(data == '\n'){
-  //     digitalWrite(D7, HIGH);
-  //     delay(500);
-  //     digitalWrite(D7, LOW);
-  //     sendGetReq2(data);
-  //   }
-  // }
   while (NodeMCU.available() > 0) {
     char data = NodeMCU.read();
     receivedData += data;
-    if (data == '\n') {
-      blink200();
-      sendGetReq2(receivedData);
+    if (data == '\n' || data == ' ') {
+      blink50();
+      sendPostReq(receivedData);
       receivedData = "";
     }
   }
 }
 
 void sendGetReq2(String uid) { 
-  String url = serverURL + uid;
-  Serial.println(url);
-  https.begin(client, url);
   int httpResponseCode = https.GET();
   String response = https.getString();
 
   if (httpResponseCode > 0) {
-    blink200();
-    Serial.println("Status: " + httpResponseCode);
+    blink50();
+    Serial.println("Status: " + String(httpResponseCode));
     Serial.println(response);
   } else {
-    Serial.println("Status: " + httpResponseCode);
+    Serial.println("Status: " + String(httpResponseCode));
     Serial.println(response);
   }
-
   https.end();
 }
-void sendGetRequest() {
 
-  if (client.connect(server, port)) {
-    client.print("GET /?name=Omkar HTTP/1.1\r\n");
-    client.print("Host: ");
-    client.print(server);
-    client.print("\r\n");
-    client.print("Connection: close\r\n\r\n");
-    
-    while (client.connected()) {
-      if (client.available()) {
-        String line = client.readStringUntil('\r');
-        Serial.print(line);
-      }
-    }
-    client.stop();
+void sendPostReq(String uid) {
+  https.addHeader("Content-Type", "application/x-www-form-urlencoded");
+  int httpResponseCode = https.POST(postData);
+  String response = https.getString();
+
+  if (httpResponseCode > 0) {
+    blink50();
+    Serial.println("Status: " + String(httpResponseCode));
+    Serial.println(response);
   } else {
-    Serial.println("Failed to connect to server");
+    Serial.println("Status: " + String(httpResponseCode));
+    Serial.println(response);
   }
+  https.end();
 }
 
-void blink200(){
+// void sendGetReq2(String uid) { 
+//   String url = serverURL + "/?uid=" + uid;
+//   Serial.println(url);
+//   https.begin(client, url);
+//   int httpResponseCode = https.GET();
+//   String response = https.getString();
+
+//   if (httpResponseCode > 0) {
+//     blink100();
+//     Serial.println("Status: " + httpResponseCode);
+//     Serial.println(response);
+//   } else {
+//     Serial.println("Status: " + httpResponseCode);
+//     Serial.println(response);
+//   }
+
+//   https.end();
+// }
+
+void blink50(){
   digitalWrite(D7, HIGH);
-  delay(200);
+  delay(50);
   digitalWrite(D7, LOW);
-  delay(200);
+  delay(50);
   digitalWrite(D7, HIGH);
-  delay(200);
+  delay(50);
   digitalWrite(D7, LOW);
 }
