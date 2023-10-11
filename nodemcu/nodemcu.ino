@@ -1,15 +1,19 @@
 #include <ESP8266WiFi.h>
 #include <SoftwareSerial.h> 
 #include <WiFiClient.h>
+#include <ESP8266HTTPClient.h>
 
 SoftwareSerial NodeMCU(D2,D3);
-WiFiClient client;
+BearSSL::WiFiClientSecure client;
+HTTPClient https;
 
 const char* ssid = "Searching";
 const char* password = "ertiga@8789";
 
 const char* server = "127.0.0.1";
 const int port = 3000;
+
+const char* serverURL = "https://rfid-based-attendance-system-backend.onrender.com/?name=Omkar";
 
 void setup() {
 
@@ -33,6 +37,9 @@ void setup() {
   Serial.println();
   Serial.println("Connected to WiFi");
 
+  client.setInsecure(); 
+  https.begin(client, serverURL);
+
   Serial.println("NodeMCU Ready !");
 }
 
@@ -45,9 +52,24 @@ void loop() {
       digitalWrite(D7, HIGH);
       delay(500);
       digitalWrite(D7, LOW);
-      sendGetRequest();
+      sendGetReq2();
     }
   }
+}
+
+void sendGetReq2() {
+  int httpResponseCode = https.GET();
+
+  if (httpResponseCode > 0) {
+    String response = https.getString();
+    Serial.println(httpResponseCode);
+    Serial.println(response);
+  } else {
+    Serial.print("Error on HTTPS request: ");
+    Serial.println(httpResponseCode);
+  }
+
+  https.end();
 }
 void sendGetRequest() {
 

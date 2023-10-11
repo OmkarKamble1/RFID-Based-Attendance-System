@@ -9,10 +9,13 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  const name = req.query.name;
-  console.log(name);
+  const { uid, id } = req.query;
+  console.log(uid, id);
   res.status(200).json({
-	query: req.query
+	success: true,
+	message: "Attendance saved.",
+	UID: uid, 
+	id: id
   });
 });
 
