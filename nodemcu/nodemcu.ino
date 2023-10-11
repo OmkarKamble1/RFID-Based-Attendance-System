@@ -13,7 +13,7 @@ const char* password = "ertiga@8789";
 const char* server = "127.0.0.1";
 const int port = 3000;
 
-const char* serverURL = "https://rfid-based-attendance-system-backend.onrender.com/?name=Omkar";
+const char* serverURL = "https://rfid-based-attendance-system-backend.onrender.com/?uid=";
 
 void setup() {
 
@@ -37,36 +37,49 @@ void setup() {
   Serial.println();
   Serial.println("Connected to WiFi");
 
-  client.setInsecure(); 
-  https.begin(client, serverURL);
+  client.setInsecure();
 
   Serial.println("NodeMCU Ready !");
 }
 
+String receivedData = "";
 
 void loop() {
-  if(NodeMCU.available() > 0){
+  // if(NodeMCU.available() > 0){
+  //   char data = NodeMCU.read();
+  //   Serial.print(data);
+  //   if(data == '\n'){
+  //     digitalWrite(D7, HIGH);
+  //     delay(500);
+  //     digitalWrite(D7, LOW);
+  //     sendGetReq2(data);
+  //   }
+  // }
+  while (NodeMCU.available() > 0) {
     char data = NodeMCU.read();
-    Serial.print(data);
-    if(data == '\n'){
-      digitalWrite(D7, HIGH);
-      delay(500);
-      digitalWrite(D7, LOW);
-      sendGetReq2();
+    receivedData += data;
+    if (data == '\n') {
+      blink200();
+      sendGetReq2(receivedData);
+      receivedData = "";
     }
   }
 }
 
-void sendGetReq2() {
+void sendGetReq2(String uid) { 
+  String url = serverURL + uid;
+  Serial.println(url);
+  https.begin(client, url);
   int httpResponseCode = https.GET();
+  String response = https.getString();
 
   if (httpResponseCode > 0) {
-    String response = https.getString();
-    Serial.println(httpResponseCode);
+    blink200();
+    Serial.println("Status: " + httpResponseCode);
     Serial.println(response);
   } else {
-    Serial.print("Error on HTTPS request: ");
-    Serial.println(httpResponseCode);
+    Serial.println("Status: " + httpResponseCode);
+    Serial.println(response);
   }
 
   https.end();
@@ -90,4 +103,14 @@ void sendGetRequest() {
   } else {
     Serial.println("Failed to connect to server");
   }
+}
+
+void blink200(){
+  digitalWrite(D7, HIGH);
+  delay(200);
+  digitalWrite(D7, LOW);
+  delay(200);
+  digitalWrite(D7, HIGH);
+  delay(200);
+  digitalWrite(D7, LOW);
 }
