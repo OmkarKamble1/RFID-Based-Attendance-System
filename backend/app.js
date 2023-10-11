@@ -10,6 +10,7 @@ app.use(express.json());
 
 app.get('/', (req, res) => {
   const name = req.query.name;
+  console.log(name);
   res.status(200).json({
 	query: req.query
   });
