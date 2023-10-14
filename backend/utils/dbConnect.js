@@ -14,6 +14,8 @@ const pool = new Pool({
 	max: 10
 });
 
+await pool.connect();
+
 export const query = async (q, params) => {
 	const { rows, rowCount } = await pool.query(q, params);
   	return { rows, rowCount };
