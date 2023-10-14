@@ -3,9 +3,9 @@ CREATE TABLE lecture_session (
 	teacher_id uuid NOT NULL,
 	sem VARCHAR(100) NOT NULL,
 	branch VARCHAR(100) NOT NULL,
-	class VARCHAR(10) NOT NULL,
+	div VARCHAR(10) NOT NULL,
 	subject VARCHAR(100) NOT NULL,
-	is_active BOOLEAN DEFAULT FALSE,
+	is_active BOOLEAN NOT NULL,
 	start_time TIMESTAMP,
-	ende_time TIMESTAMP
+	end_time TIMESTAMP
 );

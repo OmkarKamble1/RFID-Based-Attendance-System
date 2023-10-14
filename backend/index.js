@@ -5,6 +5,9 @@ import session from 'express-session';
 
 import saveAttendance from './controllers/saveAttendance.js';
 import teacherLogin from './controllers/teacherLogin.js';
+import createLecture from './controllers/createLecture.js';
+import cookieParser from 'cookie-parser';
+import { loginMiddleware, sessionCheckerMiddleware } from './middlewares/index.js';
 
 dotenv.config();
 
@@ -14,6 +17,7 @@ const store = new session.MemoryStore();
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({extended: true}));
 app.use(session({
 	secret: process.env.SESSION_SECRET,
@@ -22,17 +26,16 @@ app.use(session({
 	store: store
 }));
 
+// # Save attendance
+app.post('/saveAttendance', sessionCheckerMiddleware, saveAttendance);
 
-// # Save attendance route
-app.post('/markAttendance', saveAttendance);
+// # Teacher login
+app.get('/teacher/login', loginMiddleware, teacherLogin);
 
-// # Teacher login route
-app.post('/teacher/login', teacherLogin);
+// # Create lecture-session
+app.post('/teacher/createLecture', sessionCheckerMiddleware, createLecture);
 
+// # Server running
+app.get('/', (_, res) => res.json({success: true, message: 'Server is running.', uptime: process.uptime()}));
 
-// # Server running route
-app.get('/', (_, res) => res.status(200).send('Server is running.'));
-
-app.listen(port, () => {
-  console.log(`Server is listening on http://localhost:${port}`);
-});
+app.listen(port, () => console.log(`Server is listening on http://localhost:${port}`));

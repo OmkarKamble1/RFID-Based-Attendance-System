@@ -1,4 +1,4 @@
-import { query } from '../utils/dbConnect';
+import { query } from '../utils/dbConnect.js';
 
 const saveAttendance = async (req, res) => {
 
