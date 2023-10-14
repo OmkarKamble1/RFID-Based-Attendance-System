@@ -1,3 +1,13 @@
 CREATE TABLE student (
-	student_id uuid DEFAULT PRIMARY KEY 
+	student_id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
+	first_name VARCHAR(255) NOT NULL,
+	last_name VARCHAR(255) NOT NULL,
+	email VARCHAR(255),
+	phone VARCHAR(255),
+	sem VARCHAR(100) NOT NULL,
+	branch VARCHAR(100) NOT NULL,
+	class VARCHAR(10) NOT NULL,
+	rfid_uid VARCHAR(255),
+	id VARCHAR(255) NOT NULL,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

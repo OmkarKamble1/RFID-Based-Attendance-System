@@ -1,2 +1,3 @@
-backend/node_modules
-frontend/node_modules
+# Ignore node_modules in the backend and frontend directories
+/backend/node_modules/
+/frontend/node_modules/
