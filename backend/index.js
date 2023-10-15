@@ -7,7 +7,7 @@ import saveAttendance from './controllers/saveAttendance.js';
 import teacherLogin from './controllers/teacherLogin.js';
 import createLecture from './controllers/createLecture.js';
 import cookieParser from 'cookie-parser';
-import { loginMiddleware, saveAttendanceMiddleware, sessionCheckerMiddleware } from './middlewares/index.js';
+import { loginMiddleware, hardwareMiddleware, sessionCheckerMiddleware } from './middlewares/index.js';
 import lectureReport from './controllers/lectureReport.js';
 import lectureStatus from './controllers/lectureStatus.js';
 
@@ -33,7 +33,7 @@ app.use(session({
 }));
 
 // # Save attendance
-app.post('/saveAttendance', saveAttendanceMiddleware, saveAttendance);
+app.post('/saveAttendance', hardwareMiddleware, saveAttendance);
 
 // # Teacher login
 app.post('/teacher/login', loginMiddleware, teacherLogin);
@@ -48,7 +48,7 @@ app.post('/teacher/lecture/report', sessionCheckerMiddleware, lectureReport);
 app.post('/teacher/lecture/status', sessionCheckerMiddleware, lectureStatus);
 
 // # Test route
-app.post('/test', async (req, res) => {
+app.post('/test', hardwareMiddleware, async (req, res) => {
 	const { uid } = req.body;
 	console.log(`[test]: recieved request for UID: ${uid}`);
 	res.status(200).send(`[test]: recieved request for UID: ${uid}`);

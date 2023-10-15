@@ -16,7 +16,7 @@ export const loginMiddleware = async (req, res, next) => {
 };
 
 
-export const saveAttendanceMiddleware = async (req, res, next) => {
+export const hardwareMiddleware = async (req, res, next) => {
 	const { authorization } = req.headers;
 	if(authorization === process.env.DEVICE_SECRET) {
 		await next();
