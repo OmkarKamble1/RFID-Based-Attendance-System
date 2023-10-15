@@ -7,7 +7,9 @@ import saveAttendance from './controllers/saveAttendance.js';
 import teacherLogin from './controllers/teacherLogin.js';
 import createLecture from './controllers/createLecture.js';
 import cookieParser from 'cookie-parser';
-import { loginMiddleware, sessionCheckerMiddleware } from './middlewares/index.js';
+import { loginMiddleware, saveAttendanceMiddleware, sessionCheckerMiddleware } from './middlewares/index.js';
+import lectureReport from './controllers/lectureReport.js';
+import lectureStatus from './controllers/lectureStatus.js';
 
 dotenv.config();
 
@@ -27,13 +29,20 @@ app.use(session({
 }));
 
 // # Save attendance
-app.post('/saveAttendance', sessionCheckerMiddleware, saveAttendance);
+app.post('/saveAttendance', saveAttendanceMiddleware, saveAttendance);
 
 // # Teacher login
-app.get('/teacher/login', loginMiddleware, teacherLogin);
+app.post('/teacher/login', loginMiddleware, teacherLogin);
 
 // # Create lecture-session
-app.post('/teacher/createLecture', sessionCheckerMiddleware, createLecture);
+app.post('/teacher/lecture/create', sessionCheckerMiddleware, createLecture);
+
+// # Lecture report
+app.post('/teacher/lecture/report', sessionCheckerMiddleware, lectureReport);
+
+// # Lecture status
+app.post('/teacher/lecture/status', sessionCheckerMiddleware, lectureStatus);
+
 
 // # Server running
 app.get('/', (_, res) => res.json({success: true, message: 'Server is running.', uptime: process.uptime()}));
