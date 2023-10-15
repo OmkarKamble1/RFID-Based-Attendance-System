@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route  } from 'react-router-dom';
 import MainPage from "./components/MainPage";
 import StartLecture from "./components/StartLecture";
 import ViewReport from "./components/ViewReport";
+import Modal from './components/Modal';
+import { useState } from 'react';
 
 function App() {
   return (

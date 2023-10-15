@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from './partials/header'
 import Footer from './partials/Footer'
 import { Link } from 'react-router-dom'
+import Modal from './Modal'
 
 export default function TeacherLogin() {
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const openModal = () => {
+		setIsModalOpen(true);
+		document.body.classList.add('overflow-hidden');
+	}
+
+	const closeModal = () => {
+		setIsModalOpen(false) 
+		document.body.classList.remove('overflow-hidden');
+	}
+	
+
   return (
     <>
         <Header />
@@ -14,10 +28,14 @@ export default function TeacherLogin() {
                     <input className='border-b-2 h-20 w-[100%] focus:outline-1 focus:outline-slate-100 ' type="text" name="teacherName" id="teacherName" placeholder='Name'/>
                     <input className='border-b-2 h-20 w-[100%] focus:outline-1 focus:outline-slate-100' type="text" name="teacherPassword" id="teacherPassword" placeholder='password'/>
                 </div>
-                {/* <button className='bg-violet-500 text-white rounded-md h-10 mb-5' >Log In</button> */}
-                <Link to={'/welcome'} className='bg-violet-500 text-white rounded-md h-10 mb-5 flex flex-wrap content-center justify-center'> Log In </Link>
+                <button onClick={openModal} className='bg-violet-700 text-white rounded-md h-10 mb-5' >Log In /Open modal</button>
             </div>
         </div>
+		<button >Open Modal</button>
+		<Modal isOpen={isModalOpen} onClose={closeModal}>
+			<h2>Modal Content</h2>
+			<p>This is the content of the modal.</p>
+		</Modal>
         <Footer />
     </>
   )
