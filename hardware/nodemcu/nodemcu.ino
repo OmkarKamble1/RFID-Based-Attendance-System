@@ -13,7 +13,10 @@ const char* password = "ertiga@8789";
 const char* server = "127.0.0.1";
 const int port = 3000;
 
-const String serverURL = "https://rfid-based-attendance-system-backend.onrender.com";
+// const String serverURL = "https://rfid-based-attendance-system-backend.onrender.com";
+
+const String serverURL = "http://localhost:3001/test";
+
 
 void setup() {
 
@@ -23,21 +26,21 @@ void setup() {
   pinMode(D3, OUTPUT);
   pinMode(D7, OUTPUT);
 
-  // Connect to Wi-Fi
+  // Connect to WiFi
   Serial.println();
   WiFi.begin(ssid, password);
 
   Serial.print("Connecting to WiFi");
 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(1500);
+    delay(1200);
     Serial.print(".");
   }
   
   Serial.println();
-  Serial.println("Connected to WiFi");
+  Serial.println("Connected to WiFi: " + WiFi.SSID());
 
-  client.setInsecure();
+  // client.setInsecure();
   https.begin(client, serverURL);
   Serial.println("NodeMCU Ready !");
 }
@@ -72,11 +75,12 @@ void sendGetReq2(String uid) {
 }
 
 void sendPostReq(String uid) {
-  https.addHeader("Content-Type", "application/x-www-form-urlencoded");
+  https.addHeader("Content-Type", "application/x-www-form-urlencoded");  
+  // https.addHeader("Authorization", "4A1ff8E237e8");
+  Serial.println(uid);
   String postData = "uid=" + uid;
   int httpResponseCode = https.POST(postData);
   String response = https.getString();
-
   if (httpResponseCode > 0) {
     blink50();
     Serial.println("Status: " + String(httpResponseCode));
@@ -87,25 +91,6 @@ void sendPostReq(String uid) {
   }
   https.end();
 }
-
-// void sendGetReq2(String uid) { 
-//   String url = serverURL + "/?uid=" + uid;
-//   Serial.println(url);
-//   https.begin(client, url);
-//   int httpResponseCode = https.GET();
-//   String response = https.getString();
-
-//   if (httpResponseCode > 0) {
-//     blink100();
-//     Serial.println("Status: " + httpResponseCode);
-//     Serial.println(response);
-//   } else {
-//     Serial.println("Status: " + httpResponseCode);
-//     Serial.println(response);
-//   }
-
-//   https.end();
-// }
 
 void blink50(){
   digitalWrite(D7, HIGH);

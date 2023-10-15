@@ -23,9 +23,13 @@ app.use(cookieParser());
 app.use(express.urlencoded({extended: true}));
 app.use(session({
 	secret: process.env.SESSION_SECRET,
-	cookie: { maxAge: 3 * 30 * 24 * 60 * 60 * 1000 },
+	cookie: { 
+		maxAge: 3 * 30 * 24 * 60 * 60 * 1000,
+		secure: true
+	},
 	saveUninitialized: false,
-	store: store
+	store: store,
+	resave: false
 }));
 
 // # Save attendance
@@ -43,6 +47,13 @@ app.post('/teacher/lecture/report', sessionCheckerMiddleware, lectureReport);
 // # Lecture status
 app.post('/teacher/lecture/status', sessionCheckerMiddleware, lectureStatus);
 
+// # Test route
+app.post('/test', async (req, res) => {
+	const { uid } = req.body;
+	console.log(uid);
+	console.log(req.headers);
+	res.status(200).send(`recieved request ${uid}`);
+});
 
 // # Server running
 app.get('/', (_, res) => res.json({success: true, message: 'Server is running.', uptime: process.uptime()}));
