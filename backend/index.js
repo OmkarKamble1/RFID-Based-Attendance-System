@@ -50,9 +50,8 @@ app.post('/teacher/lecture/status', sessionCheckerMiddleware, lectureStatus);
 // # Test route
 app.post('/test', async (req, res) => {
 	const { uid } = req.body;
-	console.log(uid);
-	console.log(req.headers);
-	res.status(200).send(`recieved request ${uid}`);
+	console.log(`[test]: recieved request for UID: ${uid}`);
+	res.status(200).send(`[test]: recieved request for UID: ${uid}`);
 });
 
 // # Server running

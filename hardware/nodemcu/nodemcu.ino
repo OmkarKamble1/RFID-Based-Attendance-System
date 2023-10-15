@@ -13,9 +13,9 @@ const char* password = "ertiga@8789";
 const char* server = "127.0.0.1";
 const int port = 3000;
 
-// const String serverURL = "https://rfid-based-attendance-system-backend.onrender.com";
+const String serverURL = "https://rfid-based-attendance-system-backend.onrender.com/test";
 
-const String serverURL = "http://localhost:3001/test";
+// const String serverURL = "http://localhost:3001/test";
 
 
 void setup() {
@@ -40,7 +40,7 @@ void setup() {
   Serial.println();
   Serial.println("Connected to WiFi: " + WiFi.SSID());
 
-  // client.setInsecure();
+  client.setInsecure();
   https.begin(client, serverURL);
   Serial.println("NodeMCU Ready !");
 }
@@ -76,7 +76,7 @@ void sendGetReq2(String uid) {
 
 void sendPostReq(String uid) {
   https.addHeader("Content-Type", "application/x-www-form-urlencoded");  
-  // https.addHeader("Authorization", "4A1ff8E237e8");
+  https.addHeader("Authorization", "4A1ff8E237e8");
   Serial.println(uid);
   String postData = "uid=" + uid;
   int httpResponseCode = https.POST(postData);
