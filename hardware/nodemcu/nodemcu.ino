@@ -63,13 +63,13 @@ void sendPostReq(String uid) {
   String response = http.getString();
   if (httpResponseCode > 0) {
     blink50();
-    Serial.println("Response:")
+    Serial.println("Response:");
     Serial.println("Status code: " + String(httpResponseCode));
-    Serial.print("Data: ")
+    Serial.print("Data: ");
     Serial.print(response);
     Serial.println();
   } else {
-    Serial.println("Error:")
+    Serial.println("Error:");
     Serial.println("Status code: " + String(httpResponseCode));
   }
   http.end();
