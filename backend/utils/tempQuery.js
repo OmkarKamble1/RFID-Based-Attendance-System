@@ -15,7 +15,7 @@ const pool = new Pool({
 });
 
 const q = `
-INSERT INTO student (first_name,last_name,email,phone,sem,branch,div,id,rfid_uid) VALUES('Pooja', 'Gupta', 'pooja.gupta@example.com', '8765432110', '7', 'IT', 'A', 'vu4f2021284', '1AB1FA2E');
+INSERT INTO teacher (first_name,last_name,email,phone,password) VALUES('Omkar', 'Kamble', 'omkar@gmail.com', '8104561330', 'omkar123');
 `;
 
 // const q = `SELECT * FROM student WHERE rfid_uid = '833131'`;

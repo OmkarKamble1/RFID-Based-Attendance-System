@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
-import Header from './partials/header'
-import Footer from './partials/Footer'
-import { Link } from 'react-router-dom'
-import Modal from './Modal'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 
 export default function TeacherLogin() {
@@ -17,27 +15,52 @@ export default function TeacherLogin() {
 		setIsModalOpen(false) 
 		document.body.classList.remove('overflow-hidden');
 	}
-	
+
+	const [phone, setPhone] = useState(null);
+	const [password, setPassword] = useState(null);
+	const navigate = useNavigate();
+
+	const onClickLogin = async () => {
+		if(phone && password) {
+			if(phone.match(/^[0-9]{10}$/)){
+				await axios.post('http://localhost:3001/teacher/login', {
+					phone: phone,
+					password: password
+				},
+				{
+					withCredentials: true,
+					baseURL: 'http://localhost:3001/'
+				})
+				.then(() => navigate('/'))
+				.catch(() => window.alert('Invalid credentials'))
+			} else {
+				window.alert('Enter valid mobile number')
+			}
+		} else {
+			window.alert('Please enter valid credentials')
+		}
+	};
+
+	useEffect(() => {
+		axios.get('http://localhost:3001/teacher/login',
+		{
+			withCredentials: true,
+			baseURL: 'http://localhost:3001/'
+		})
+		.then(() => navigate('/'))
+		.catch(() => navigate('/login'))
+	}, [])
 
   return (
     <>
-        <Header />
-        { <div className='relative min-h-[90vh] w-screen bg-violet-100 flex flex-wrap content-center justify-center'>
-            <form className='max-w-[400px] w-full mx-auto bg-white p-4'>
-                <h2 className='text-4xl font-bold text-center py-6'>Teacher Login</h2>
-                <div className='flex flex-col py-2'>
-                    <input className="p-2 mt-8 rounded-xl border"  placeholder="Name" type='text'/>
-                </div>
-                <div className='flex flex-col py-2'>
-                <input className="p-2 mt-5 rounded-xl border"  placeholder="Password" type='password' />
-
-            <Link to={'/Welcome'}>
-            <button className='bg-violet-700 hover:bg-violet-900 mt-5 text-white rounded-md h-10 mb-5 w-full'>Login</button>
-            </Link>
+       	<div className='relative min-h-[90vh] w-screen flex flex-wrap content-center justify-center'>
+            <form onSubmit={(e) => e.preventDefault()} className='max-w-[400px] w-full mx-auto bg-white py-12 px-8 rounded-2xl'>
+                <h2 className='text-3xl font-semibold text-center text-blue-900'>Teacher Login</h2>
+				<input onChange={(e)=> setPhone(e.currentTarget.value)} className="focus:ring-1 focus:outline-none focus:border-sky-500 focus:ring-sky-500  p-2 mt-8 rounded-xl border w-full"  placeholder="Mobile" type='text'/>
+                <input onChange={(e)=> setPassword(e.currentTarget.value)} className="focus:ring-1 focus:outline-none focus:border-sky-500 focus:ring-sky-500 p-2 mt-5 rounded-xl border w-full"  placeholder="Password" type='password' />
+            <button onClick={onClickLogin} className='bg-blue-700 hover:bg-blue-800 transition-colors mt-8 text-white rounded-xl font-semibold h-10 w-full'>Login</button>
             </form>
-        </div>}
-     
-        <Footer />
+        </div>
     </>
   )
 }

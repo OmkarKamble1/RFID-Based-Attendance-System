@@ -8,10 +8,17 @@ export const sessionCheckerMiddleware = async (req, res, next) => {
 }
 
 export const loginMiddleware = async (req, res, next) => {
-	if(!req.session || !req.session.user){
-		await next();
+	if(req.session.user || req.session.authenticated) {
+		console.log(req.session.user, req.session.authenticated)
+		res.status(200).json({
+			success: true,
+			message: 'User logged in',
+		})
 	} else {
-		res.redirect('/dashboard')
+		res.status(400).json({
+			success: false,
+			message: 'User not logged in',
+		})
 	}
 };
 

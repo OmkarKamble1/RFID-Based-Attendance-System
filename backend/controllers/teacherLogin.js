@@ -6,12 +6,15 @@ const teacherLogin = async (req, res) => {
 	if(rows.length <= 0) {
 		res.status(404).json({
 			success: false,
-			message: "Teacher unregistered"
+			message: "Invalid credentials"
 		})
 		return;
 	}
+	console.log(req.session.user);
+	console.log(req.session.authenticated);
 	req.session.user = { teacher_id: rows[0].teacher_id };
 	req.session.authenticated = true;
+	
 	res.status(200).json({
 		success: true,
 		message: "Teacher login successful"
