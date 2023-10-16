@@ -4,6 +4,7 @@ import Footer from './partials/Footer'
 import { Link } from 'react-router-dom'
 import Modal from './Modal'
 
+
 export default function TeacherLogin() {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -21,21 +22,28 @@ export default function TeacherLogin() {
   return (
     <>
         <Header />
-        <div id='teacherLogin' className='relative min-h-[90vh] w-screen bg-violet-100 flex flex-wrap content-center justify-center '>
-            <div id='loginContainer' className='realtive min-h-[40vh] min-w-[30vw] bg-white rounded-xl shadow-xl flex flex-wrap flex-col place-content-around'>
-                <h2 className='font-bold text-4xl p-3'>Teacher login.</h2>
-                <div className='flex flex-col p-3 justify-center'>
-                    <input className='border-b-2 h-20 w-[100%] focus:outline-1 focus:outline-slate-100 ' type="text" name="teacherName" id="teacherName" placeholder='Name'/>
-                    <input className='border-b-2 h-20 w-[100%] focus:outline-1 focus:outline-slate-100' type="text" name="teacherPassword" id="teacherPassword" placeholder='password'/>
+        { <div className='relative min-h-[90vh] w-screen bg-violet-100 flex flex-wrap content-center justify-center'>
+            <form className='max-w-[400px] w-full mx-auto bg-white p-4'>
+                <h2 className='text-4xl font-bold text-center py-6'>Teacher Login</h2>
+                <div className='flex flex-col py-2'>
+                    <input className="p-2 mt-8 rounded-xl border"  placeholder="Name" type='text'/>
                 </div>
-                <button onClick={openModal} className='bg-violet-700 text-white rounded-md h-10 mb-5' >Log In /Open modal</button>
-            </div>
-        </div>
+                <div className='flex flex-col py-2'>
+                <input className="p-2 mt-5 rounded-xl border"  placeholder="Password" type='password' />
+                </div>
+            
+            {/* <button onClick={openModal} className='bg-violet-700 hover:bg-violet-900 mt-5 text-white rounded-md h-10 mb-5 w-full'>Log In</button> */}
+            <Link to={'/Welcome'}>
+            <button className='bg-violet-700 hover:bg-violet-900 mt-5 text-white rounded-md h-10 mb-5 w-full'>Login</button>
+            </Link>
+            </form>
+        </div>}
+       
 		<button >Open Modal</button>
-		<Modal isOpen={isModalOpen} onClose={closeModal}>
+		{/* <Modal isOpen={isModalOpen} onClose={closeModal}>
 			<h2>Modal Content</h2>
 			<p>This is the content of the modal.</p>
-		</Modal>
+		</Modal> */}
         <Footer />
     </>
   )

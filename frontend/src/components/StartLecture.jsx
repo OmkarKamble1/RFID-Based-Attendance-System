@@ -8,7 +8,7 @@ export default function StartLecture() {
         <Header />
         <div className='relative min-h-[90vh] w-screen bg-violet-100'>
             <div className='p-10'>
-                <h1 className='text-6xl border-b-2 border-slate-300 pb-10'>Start a lecture</h1>
+                <h1 className='text-4xl border-b-2 border-slate-300 pb-10 text-center'>Start a lecture</h1>
             </div>
             <div className='min-h-[55vh]  flex flex-wrap'>
                 <div className='w-[50vw]' >
