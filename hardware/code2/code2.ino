@@ -32,15 +32,18 @@ void loop() {
 	if (!mfrc522.PICC_ReadCardSerial()) return;
 
   Serial.println("***card selected***");
-  Serial.print("UID: ");
-  for (byte i = 0; i < mfrc522.uid.size; ++i) {
-    Serial.print(mfrc522.uid.uidByte[i], HEX);
-  }
-  Serial.println();
 
-  String readData = readBlock();
-  Serial.println(readData);
-  ArduinoUno.println(readData);
+  String cardUID = "";
+  for (byte i = 0; i < mfrc522.uid.size; ++i) {
+    cardUID += String(mfrc522.uid.uidByte[i], HEX);
+  }
+  
+  Serial.print("Card UID: ");
+  Serial.println(cardUID);
+
+  // String readData = readBlock();
+  // Serial.println(readData);
+  ArduinoUno.println(cardUID);
 
   mfrc522.PICC_HaltA();
   mfrc522.PCD_StopCrypto1();

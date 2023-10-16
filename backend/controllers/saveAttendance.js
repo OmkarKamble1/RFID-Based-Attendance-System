@@ -4,7 +4,13 @@ const saveAttendance = async (req, res) => {
 
 	const { uid } = req.body;
 
-	const { rows: studentRow } = await query('SELECT student_id, branch, sem, div FROM students WHERE uid = $1', [uid]);
+	const rfid_uid = String(uid).trim().toUpperCase();
+	
+	console.log("RFID: ", rfid_uid);
+
+	const { rows: studentRow } = await query('SELECT * FROM student WHERE rfid_uid = $1', [rfid_uid]);
+
+	// console.log(studentRow);
 
 	if(studentRow == 0){
 		res.status(404).json({
@@ -27,6 +33,16 @@ const saveAttendance = async (req, res) => {
 	}
 
 	const { lecture_id, teacher_id } = sessionRow[0];
+
+	const { rows: attendanceRow } = await query('SELECT * FROM attendance WHERE lecture_id = $1 AND teacher_id = $2 AND student_id = $3', [lecture_id, teacher_id, student_id]);
+
+	if(attendanceRow.length > 0){
+		res.status(401).json({
+			success: false,
+			message: "Attendance already saved"
+		})
+		return;
+	}
 
 	await query('INSERT INTO attendance (students_id, teacher_id, lecture_id) VALUES ($1, $2, $3)', [student_id, teacher_id, lecture_id]);
 	 

@@ -49,7 +49,7 @@ app.post('/teacher/lecture/report', sessionCheckerMiddleware, lectureReport);
 app.post('/teacher/lecture/status', sessionCheckerMiddleware, lectureStatus);
 
 // # Test route
-app.post('/test', async (req, res) => {
+app.post('/test', hardwareMiddleware, async (req, res) => {
 	const { uid } = req.body;
 	const formattedDate = format(new Date(Date.now()), 'dd-MM-yyyy HH:mm:ss');
 	console.log(`[${formattedDate}][test]: recieved request for UID: ${uid}`);
