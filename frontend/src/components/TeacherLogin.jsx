@@ -28,14 +28,15 @@ export default function TeacherLogin() {
                     <input className='border-b-2 h-20 w-[100%] focus:outline-1 focus:outline-slate-100 ' type="text" name="teacherName" id="teacherName" placeholder='Name'/>
                     <input className='border-b-2 h-20 w-[100%] focus:outline-1 focus:outline-slate-100' type="text" name="teacherPassword" id="teacherPassword" placeholder='password'/>
                 </div>
-                <button onClick={openModal} className='bg-violet-700 text-white rounded-md h-10 mb-5' >Log In /Open modal</button>
+                {/* <button onClick={openModal} className='bg-violet-700 text-white rounded-md h-10 mb-5' >Log In /Open modal</button> */}
             </div>
+            <Link to={'/Welcome'}>LOg In</Link>
         </div>
 		<button >Open Modal</button>
-		<Modal isOpen={isModalOpen} onClose={closeModal}>
+		 {/* <Modal isOpen={isModalOpen} onClose={closeModal}> 
 			<h2>Modal Content</h2>
 			<p>This is the content of the modal.</p>
-		</Modal>
+		</Modal> */}
         <Footer />
     </>
   )
