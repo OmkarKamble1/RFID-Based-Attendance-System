@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser';
 import { loginMiddleware, hardwareMiddleware, sessionCheckerMiddleware } from './middlewares/index.js';
 import lectureReport from './controllers/lectureReport.js';
 import lectureStatus from './controllers/lectureStatus.js';
+import { format } from 'date-fns';
 
 dotenv.config();
 
@@ -48,10 +49,11 @@ app.post('/teacher/lecture/report', sessionCheckerMiddleware, lectureReport);
 app.post('/teacher/lecture/status', sessionCheckerMiddleware, lectureStatus);
 
 // # Test route
-app.post('/test', hardwareMiddleware, async (req, res) => {
+app.post('/test', async (req, res) => {
 	const { uid } = req.body;
-	console.log(`[test]: recieved request for UID: ${uid}`);
-	res.status(200).send(`[test]: recieved request for UID: ${uid}`);
+	const formattedDate = format(new Date(Date.now()), 'dd-MM-yyyy HH:mm:ss');
+	console.log(`[${formattedDate}][test]: recieved request for UID: ${uid}`);
+	res.status(200).send(`[${formattedDate}][test]: recieved request for UID: ${uid}`);
 });
 
 // # Server running
