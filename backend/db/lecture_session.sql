@@ -7,5 +7,6 @@ CREATE TABLE lecture_session (
 	subject VARCHAR(100) NOT NULL,
 	is_active BOOLEAN NOT NULL,
 	start_time TIMESTAMP,
-	end_time TIMESTAMP
+	end_time TIMESTAMP,
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

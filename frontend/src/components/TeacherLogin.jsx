@@ -30,20 +30,13 @@ export default function TeacherLogin() {
                 </div>
                 <div className='flex flex-col py-2'>
                 <input className="p-2 mt-5 rounded-xl border"  placeholder="Password" type='password' />
-                </div>
-            
-            {/* <button onClick={openModal} className='bg-violet-700 hover:bg-violet-900 mt-5 text-white rounded-md h-10 mb-5 w-full'>Log In</button> */}
+
             <Link to={'/Welcome'}>
             <button className='bg-violet-700 hover:bg-violet-900 mt-5 text-white rounded-md h-10 mb-5 w-full'>Login</button>
             </Link>
             </form>
         </div>}
-       
-		<button >Open Modal</button>
-		{/* <Modal isOpen={isModalOpen} onClose={closeModal}>
-			<h2>Modal Content</h2>
-			<p>This is the content of the modal.</p>
-		</Modal> */}
+     
         <Footer />
     </>
   )

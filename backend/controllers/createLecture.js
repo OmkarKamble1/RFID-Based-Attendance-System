@@ -10,7 +10,7 @@ const createLecture = async (req, res) => {
 
 	const teacher_id = req.session.user.teacher_id;
 
-	// ! check if there are any overlapping lectures by other teachers
+	// * check if there are any overlapping lectures by other teachers
 	lectureRows.forEach((l) => {
 		const overlap = !(isBefore(l.end_time, start_time) || isAfter(l.start_time, end_time));
 		if(overlap) {

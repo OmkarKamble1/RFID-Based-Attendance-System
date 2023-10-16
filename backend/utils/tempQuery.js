@@ -15,18 +15,10 @@ const pool = new Pool({
 });
 
 const q = `
-CREATE TABLE lecture_session (
-	lecture_id uuid DEFAULT uuid_generate_v4() PRIMARY KEY,
-	teacher_id uuid NOT NULL,
-	sem VARCHAR(100) NOT NULL,
-	branch VARCHAR(100) NOT NULL,
-	div VARCHAR(10) NOT NULL,
-	subject VARCHAR(100) NOT NULL,
-	is_active BOOLEAN NOT NULL,
-	start_time TIMESTAMP,
-	end_time TIMESTAMP
-);
+INSERT INTO student (first_name,last_name,email,phone,sem,branch,div,id,rfid_uid) VALUES('Pooja', 'Gupta', 'pooja.gupta@example.com', '8765432110', '7', 'IT', 'A', 'vu4f2021284', '1AB1FA2E');
 `;
+
+// const q = `SELECT * FROM student WHERE rfid_uid = '833131'`;
 
 try {
 	const {rows} = await pool.query(q);

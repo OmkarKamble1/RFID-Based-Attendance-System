@@ -1,5 +1,5 @@
 CREATE TABLE attendance (
-	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	id SERIAL PRIMARY KEY,
 	student_id uuid NOT NULL,
 	teacher_id uuid NOT NULL,
 	lecture_id uuid NOT NULL,
