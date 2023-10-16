@@ -6,9 +6,9 @@ export default function () {
   return (
     <>
         <Header />
-        <div id='teacherLogin' className='relative min-h-[90vh] w-screen bg-violet-100'>
+        {/* <div id='teacherLogin' className='relative min-h-[90vh] w-screen bg-violet-100'>
             <div className='p-10'>
-                <h1 className='text-6xl border-b-2 border-slate-300 pb-10'>Welcome <span id='teacherName'>Teacher</span> !</h1> 
+                <h1 className='text-4xl pb-5 text-center'>Welcome <span id='teacherName'>Teacher</span> !</h1> 
             </div>
             <div className='m-10 border-b-2 border-slate-300 h-20 w-[80vw] my-20'>
                 <Link to={'/start'} className='flex flex-wrap content-center text-violet-500 text-2xl hover:bg-violet-200 w-[80vw] h-full transition duration-300 ease-in-out'> Start lecture</Link>
@@ -18,7 +18,27 @@ export default function () {
                 <Link to={'/reports'} className='flex flex-wrap content-center text-violet-500 text-2xl hover:bg-violet-200 w-[80vw] h-full transition duration-300 ease-in-out'> View reports</Link>
                 
             </div>
-        </div>
+        </div> */
+        <div id='teacherLogin' className='relative min-h-[90vh] w-screen bg-violet-100 flex flex-col justify-center items-center'>
+
+    <div className='p-5 text-center'>
+        <h1 className='text-4xl pb-5 font-bold text-violet-800'>
+            Welcome <span id='teacherName' className='text-violet-600'>Teacher</span> !
+        </h1> 
+    </div>
+
+    <div className='my-5 '>
+        <Link to={'/start'} className='block text-center text-violet-700 text-2xl py-3 px-20 bg-violet-200 rounded-full hover:bg-violet-300 transition duration-300 ease-in-out'>Start Lecture</Link>
+    </div>
+
+    <div className='my-10 '>
+        <Link to={'/reports'} className='block text-center text-violet-700 text-2xl py-3 px-20 bg-violet-200 rounded-full hover:bg-violet-300 transition duration-300 ease-in-out'>View Reports</Link>
+    </div>
+
+</div>
+
+        }
+
     </>
   )
 }
