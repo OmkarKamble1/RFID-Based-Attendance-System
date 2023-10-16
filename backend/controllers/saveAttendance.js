@@ -1,4 +1,5 @@
 import { query } from '../utils/dbConnect.js';
+import { devConsole } from '../utils/miscellaneous.js';
 
 const saveAttendance = async (req, res) => {
 
@@ -6,7 +7,7 @@ const saveAttendance = async (req, res) => {
 
 	const rfid_uid = String(uid).trim().toUpperCase();
 	
-	console.log("RFID: ", rfid_uid);
+	devConsole(rfid_uid);
 
 	const { rows: studentRow } = await query('SELECT * FROM student WHERE rfid_uid = $1', [rfid_uid]);
 
@@ -27,7 +28,7 @@ const saveAttendance = async (req, res) => {
 	if(sessionRow.length <= 0) {
 		res.status(403).json({
 			success: false,
-			message: "No lecture found"
+			message: "No active lecture found"
 		})
 		return;
 	}
@@ -44,7 +45,7 @@ const saveAttendance = async (req, res) => {
 		return;
 	}
 
-	await query('INSERT INTO attendance (students_id, teacher_id, lecture_id) VALUES ($1, $2, $3)', [student_id, teacher_id, lecture_id]);
+	await query('INSERT INTO attendance (student_id, teacher_id, lecture_id) VALUES ($1, $2, $3)', [student_id, teacher_id, lecture_id]);
 	 
 	res.status(200).send(JSON.stringify({
 		success: true,
