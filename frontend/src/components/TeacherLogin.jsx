@@ -2,20 +2,20 @@ import React, { useState } from 'react'
 import Header from './partials/header'
 import Footer from './partials/Footer'
 import { Link } from 'react-router-dom'
-import Modal from './Modal'
+// import Modal from './Modal'
 
 export default function TeacherLogin() {
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	// const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const openModal = () => {
-		setIsModalOpen(true);
-		document.body.classList.add('overflow-hidden');
-	}
+	// const openModal = () => {
+	// 	setIsModalOpen(true);
+	// 	document.body.classList.add('overflow-hidden');
+	// }
 
-	const closeModal = () => {
-		setIsModalOpen(false) 
-		document.body.classList.remove('overflow-hidden');
-	}
+	// const closeModal = () => {
+	// 	setIsModalOpen(false) 
+	// 	document.body.classList.remove('overflow-hidden');
+	// }
 	
 
   return (
@@ -28,14 +28,15 @@ export default function TeacherLogin() {
                     <input className='border-b-2 h-20 w-[100%] focus:outline-1 focus:outline-slate-100 ' type="text" name="teacherName" id="teacherName" placeholder='Name'/>
                     <input className='border-b-2 h-20 w-[100%] focus:outline-1 focus:outline-slate-100' type="text" name="teacherPassword" id="teacherPassword" placeholder='password'/>
                 </div>
-                <button onClick={openModal} className='bg-violet-700 text-white rounded-md h-10 mb-5' >Log In /Open modal</button>
+                {/* <button onClick={openModal} className='bg-violet-700 text-white rounded-md h-10 mb-5' >Log In /Open modal</button> */}
+                <Link to={'/welcome'}> Next page</Link>
             </div>
         </div>
-		<button >Open Modal</button>
+		{/* <button >Open Modal</button>
 		<Modal isOpen={isModalOpen} onClose={closeModal}>
 			<h2>Modal Content</h2>
 			<p>This is the content of the modal.</p>
-		</Modal>
+		</Modal> */}
         <Footer />
     </>
   )
