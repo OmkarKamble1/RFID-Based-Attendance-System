@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 
-
 export default function TeacherLogin() {
-	const [isModalOpen, setIsModalOpen] = useState(false);
+	// const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const openModal = () => {
-		setIsModalOpen(true);
-		document.body.classList.add('overflow-hidden');
-	}
+	// const openModal = () => {
+	// 	setIsModalOpen(true);
+	// 	document.body.classList.add('overflow-hidden');
+	// }
 
 	const closeModal = () => {
 		setIsModalOpen(false) 
