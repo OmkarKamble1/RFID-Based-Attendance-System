@@ -6,11 +6,11 @@ SoftwareSerial NodeMCU(D2,D3);
 WiFiClient client;
 HTTPClient http;
 
-const char* ssid = "Omkar's Samsung";
-const char* password = "password1";
+const char* ssid = "Searching";
+const char* password = "ertiga@8789";
 
 
-const String serverURL2 = "http://192.168.205.100:3001/saveAttendance/";
+const String serverURL2 = "http://192.168.0.110:3001/saveAttendance/";
 
 
 void setup() {

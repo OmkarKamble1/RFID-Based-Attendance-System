@@ -3,18 +3,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 
 export default function TeacherLogin() {
-	// const [isModalOpen, setIsModalOpen] = useState(false);
-
-	// const openModal = () => {
-	// 	setIsModalOpen(true);
-	// 	document.body.classList.add('overflow-hidden');
-	// }
-
-	const closeModal = () => {
-		setIsModalOpen(false) 
-		document.body.classList.remove('overflow-hidden');
-	}
-
 	const [phone, setPhone] = useState(null);
 	const [password, setPassword] = useState(null);
 	const navigate = useNavigate();
@@ -52,7 +40,7 @@ export default function TeacherLogin() {
 
   return (
     <>
-       	<div className='relative min-h-[90vh] w-screen flex flex-wrap content-center justify-center'>
+       	<div className='min-h-[calc(100vh-70px)] w-screen flex flex-wrap content-center justify-center'>
             <form onSubmit={(e) => e.preventDefault()} className='max-w-[400px] w-full mx-auto bg-white py-12 px-8 rounded-2xl'>
                 <h2 className='text-3xl font-semibold text-center text-blue-900'>Teacher Login</h2>
 				<input onChange={(e)=> setPhone(e.currentTarget.value)} className="focus:ring-1 focus:outline-none focus:border-sky-500 focus:ring-sky-500  p-2 mt-8 rounded-xl border w-full"  placeholder="Mobile" type='text'/>

@@ -1,10 +1,8 @@
 export const collegeData = {
 	IT: {
-		"SEM 6": ['PHYSICS', 'CHEMISTRY', 'MATHS 1'],
-		"SEM 7": ['PHYSICS', 'CHEMISTRY', 'MATHS 1']
+		"7": ['AIDS 2', 'IOE', 'CSL', 'STQA', 'IRS']
 	},
 	CS: {
-		"SEM 6": ['PHYSICS', 'CHEMISTRY', 'MATHS 1'],
-		"SEM 7": ['PHYSICS', 'CHEMISTRY', 'MATHS 1'],
+		"7": ['PHYSICS', 'CHEMISTRY', 'MATHS 1'],
 	},
 }

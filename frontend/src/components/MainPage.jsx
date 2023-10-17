@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react'
-import Header from './partials/header'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
 export default function () {
 	const navigate = useNavigate();
+
 	useEffect(() => {
 		axios.get('http://localhost:3001/teacher/login',
 		{
@@ -14,12 +14,13 @@ export default function () {
 		.then(() => navigate('/'))
 		.catch(() => navigate('/login'))
 	}, [])
+	
   return (
-    <div className='min-h-screen flex items-center justify-center'>   
+    <div className='min-h-[calc(100vh-70px)] flex items-center justify-center'>   
 		<div className='x-10 bg-white px-12 py-10 rounded-xl w-[430px]'>
 			<div className='p-5 text-center'>
 				<h1 className='text-3xl pb-5 font-semibold text-blue-900 truncate'>
-					Hello, Omkar !
+					Hello Teacher !
 				</h1> 
 			</div>
 

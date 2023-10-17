@@ -10,11 +10,11 @@ const teacherLogin = async (req, res) => {
 		})
 		return;
 	}
-	console.log(req.session.user);
-	console.log(req.session.authenticated);
 	req.session.user = { teacher_id: rows[0].teacher_id };
 	req.session.authenticated = true;
 	
+	console.log(req.session.user);
+	console.log(req.session.authenticated);
 	res.status(200).json({
 		success: true,
 		message: "Teacher login successful"

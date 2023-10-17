@@ -4,6 +4,7 @@ export const sessionCheckerMiddleware = async (req, res, next) => {
 		return;
 	} else {
 		await next();
+		return;
 	}
 }
 

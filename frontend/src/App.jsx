@@ -3,16 +3,13 @@ import { BrowserRouter, Routes, Route, useNavigate  } from 'react-router-dom';
 import MainPage from "./components/MainPage";
 import StartLecture from "./components/StartLecture";
 import ViewReport from "./components/ViewReport";
-import Modal from './components/Modal';
-import { useEffect, useState } from 'react';
-import Header from './components/partials/header';
-import axios from 'axios';
+import Header from './components/partials/header'
 
 function App() {
   return (
-	<div className='overflow-x-hidden font-sans min-h-screen from-fuchsia-100 to-blue-100 bg-gradient-to-tl'>
-		{/* <Header /> */}
+	<div className='overflow-x-hidden font-sans min-h-[calc(100vh-70px)] from-fuchsia-100 to-blue-100 bg-gradient-to-tl'>
 		<BrowserRouter>
+		<Header />
 			<Routes>
 				<Route exact path='/login' element={<TeacherLogin />} />
 				<Route exact path='/' element={<MainPage />} />
