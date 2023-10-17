@@ -1,21 +1,24 @@
 import TeacherLogin from "./components/TeacherLogin";
-import { BrowserRouter, Routes, Route  } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate  } from 'react-router-dom';
 import MainPage from "./components/MainPage";
 import StartLecture from "./components/StartLecture";
 import ViewReport from "./components/ViewReport";
 import Modal from './components/Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import Header from './components/partials/header';
+import axios from 'axios';
 
 function App() {
   return (
-	<div className='overflow-x-hidden font-poppins'>
-		{/* <h1 className="text-5xl font-bold">Attendance Dashboard</h1> */}
+	<div className='overflow-x-hidden font-sans min-h-screen from-fuchsia-100 to-blue-100 bg-gradient-to-tl'>
+		{/* <Header /> */}
 		<BrowserRouter>
 			<Routes>
-				<Route exact path='/' element={<TeacherLogin />} />
-				<Route exact path='/welcome' element={<MainPage />} />
-				<Route exact path='/start' element={<StartLecture />} />
-				<Route exact path='/reports' element={<ViewReport />} />
+				<Route exact path='/login' element={<TeacherLogin />} />
+				<Route exact path='/' element={<MainPage />} />
+				<Route exact path='/lecture' element={<StartLecture />} />
+				<Route exact path='/report' element={<ViewReport />} />
+				<Route path='/*' element={<div className='h-full flex items-center justify-center flex-col font-semibold text-2xl mt-20'><h1>404</h1><h1>NOT FOUND</h1></div>} />
 			</Routes>
 		</BrowserRouter>
 	</div>

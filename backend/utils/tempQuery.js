@@ -15,8 +15,10 @@ const pool = new Pool({
 });
 
 const q = `
-
+INSERT INTO teacher (first_name,last_name,email,phone,password) VALUES('Omkar', 'Kamble', 'omkar@gmail.com', '8104561330', 'omkar123');
 `;
+
+// const q = `SELECT * FROM student WHERE rfid_uid = '833131'`;
 
 try {
 	const {rows} = await pool.query(q);

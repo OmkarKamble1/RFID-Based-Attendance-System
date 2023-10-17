@@ -16,10 +16,11 @@
     "@mui/material": "^5.14.14",
     "export-to-csv": "^0.2.2",
     "material-react-table": "^1.15.1",
+    "axios": "^1.5.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
-    "react-router-dom": "^6.16.0"
+    "react-router-dom": "^6.17.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

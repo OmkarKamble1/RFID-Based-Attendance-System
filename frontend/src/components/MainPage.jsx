@@ -1,24 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Header from './partials/header'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios';
 
 export default function () {
+	const navigate = useNavigate();
+	useEffect(() => {
+		axios.get('http://localhost:3001/teacher/login',
+		{
+			withCredentials: true,
+			baseURL: 'http://localhost:3001/'
+		})
+		.then(() => navigate('/'))
+		.catch(() => navigate('/login'))
+	}, [])
   return (
-    <>
-        <Header />
-        <div id='teacherLogin' className='relative min-h-[90vh] w-screen bg-violet-100'>
-            <div className='p-10'>
-                <h1 className='text-6xl border-b-2 border-slate-300 pb-10'>Welcome <span id='teacherName'>Teacher</span> !</h1> 
-            </div>
-            <div className='m-10 border-b-2 border-slate-300 h-20 w-[80vw] my-20'>
-                <Link to={'/start'} className='flex flex-wrap content-center text-violet-500 text-2xl hover:bg-violet-200 w-[80vw] h-full transition duration-300 ease-in-out'> Start lecture</Link>
-                
-            </div>
-            <div className='m-10 border-b-2 border-slate-300 h-20 w-[80vw] '>
-                <Link to={'/reports'} className='flex flex-wrap content-center text-violet-500 text-2xl hover:bg-violet-200 w-[80vw] h-full transition duration-300 ease-in-out'> View reports</Link>
-                
-            </div>
-        </div>
-    </>
+    <div className='min-h-screen flex items-center justify-center'>   
+		<div className='x-10 bg-white px-12 py-10 rounded-xl w-[430px]'>
+			<div className='p-5 text-center'>
+				<h1 className='text-3xl pb-5 font-semibold text-blue-900 truncate'>
+					Hello, Omkar !
+				</h1> 
+			</div>
+
+			<Link to={'/lecture'} className='mt-4 block text-center text-white text-lg font-semibold py-3 bg-blue-700 rounded-2xl hover:bg-blue-800 hover:shadow-md transition-colors'>Start Lecture</Link>
+
+			<Link to={'/report'} className='mt-8 block text-center text-blue-800 text-lg font-semibold py-3 bg-transparent border-2 border-blue-700 rounded-2xl hover:bg-slate-100 hover:shadow-md transition-colors'>View Reports</Link>
+		</div>
+    </div>
   )
 }

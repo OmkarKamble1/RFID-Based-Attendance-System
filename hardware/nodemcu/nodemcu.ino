@@ -1,44 +1,42 @@
 #include <ESP8266WiFi.h>
-#include <SoftwareSerial.h> 
-#include <WiFiClient.h>
+#include <SoftwareSerial.h>
 #include <ESP8266HTTPClient.h>
 
 SoftwareSerial NodeMCU(D2,D3);
-BearSSL::WiFiClientSecure client;
-HTTPClient https;
+WiFiClient client;
+HTTPClient http;
 
-const char* ssid = "Searching";
-const char* password = "ertiga@8789";
+const char* ssid = "Omkar's Samsung";
+const char* password = "password1";
 
-const char* server = "127.0.0.1";
-const int port = 3000;
 
-const String serverURL = "https://rfid-based-attendance-system-backend.onrender.com";
+const String serverURL2 = "http://192.168.205.100:3001/saveAttendance/";
+
 
 void setup() {
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   NodeMCU.begin(4800);
   pinMode(D2, INPUT);
   pinMode(D3, OUTPUT);
   pinMode(D7, OUTPUT);
 
-  // Connect to Wi-Fi
+  // Connect to WiFi
   Serial.println();
   WiFi.begin(ssid, password);
 
   Serial.print("Connecting to WiFi");
 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(1500);
+    delay(1200);
     Serial.print(".");
   }
   
   Serial.println();
-  Serial.println("Connected to WiFi");
+  Serial.println("Connected to WiFi: " + WiFi.SSID());
 
-  client.setInsecure();
-  https.begin(client, serverURL);
+  // client.setInsecure();
+  http.begin(client, serverURL2);
   Serial.println("NodeMCU Ready !");
 }
 
@@ -56,56 +54,26 @@ void loop() {
   }
 }
 
-void sendGetReq2(String uid) { 
-  int httpResponseCode = https.GET();
-  String response = https.getString();
-
-  if (httpResponseCode > 0) {
-    blink50();
-    Serial.println("Status: " + String(httpResponseCode));
-    Serial.println(response);
-  } else {
-    Serial.println("Status: " + String(httpResponseCode));
-    Serial.println(response);
-  }
-  https.end();
-}
-
 void sendPostReq(String uid) {
-  https.addHeader("Content-Type", "application/x-www-form-urlencoded");
+  
+  http.addHeader("Content-Type", "application/x-www-form-urlencoded");  
+  http.addHeader("Authorization", "4A1ff8E237e8");
   String postData = "uid=" + uid;
-  int httpResponseCode = https.POST(postData);
-  String response = https.getString();
-
+  int httpResponseCode = http.POST(postData);
+  String response = http.getString();
   if (httpResponseCode > 0) {
     blink50();
-    Serial.println("Status: " + String(httpResponseCode));
-    Serial.println(response);
+    Serial.println("Response:");
+    Serial.println("Status code: " + String(httpResponseCode));
+    Serial.print("Data: ");
+    Serial.print(response);
+    Serial.println();
   } else {
-    Serial.println("Status: " + String(httpResponseCode));
-    Serial.println(response);
+    Serial.println("Error:");
+    Serial.println("Status code: " + String(httpResponseCode));
   }
-  https.end();
+  http.end();
 }
-
-// void sendGetReq2(String uid) { 
-//   String url = serverURL + "/?uid=" + uid;
-//   Serial.println(url);
-//   https.begin(client, url);
-//   int httpResponseCode = https.GET();
-//   String response = https.getString();
-
-//   if (httpResponseCode > 0) {
-//     blink100();
-//     Serial.println("Status: " + httpResponseCode);
-//     Serial.println(response);
-//   } else {
-//     Serial.println("Status: " + httpResponseCode);
-//     Serial.println(response);
-//   }
-
-//   https.end();
-// }
 
 void blink50(){
   digitalWrite(D7, HIGH);
