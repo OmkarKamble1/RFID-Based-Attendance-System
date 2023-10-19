@@ -2,104 +2,69 @@ import React from 'react';
 import { MaterialReactTable } from 'material-react-table';
 import { Box, Button } from '@mui/material';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
-import { ExportToCsv } from 'export-to-csv'; //or use your library of choice here
+import { ExportToCsv } from 'export-to-csv';
 
-
-//defining columns outside of the component is fine, is stable
 const columns = [
-  {
-    accessorKey: 'name',
-    header: 'Name',
-    size: 40,
-  },
-  {
-    accessorKey: 'id',
-    header: 'Student ID',
-    size: 120,
-  },
-  {
-    accessorKey: 'attendance',
-    header: 'Attendance',
-    size: 120,
-  }
-  
+	{
+		accessorKey: 'id',
+		header: 'ID',
+		size: 60,
+	},
+	{
+		accessorKey: 'first_name',
+		header: 'First Name',
+	},
+	{
+		accessorKey: 'last_name',
+		header: 'Last Name',
+	},
+	{
+		accessorKey: 'attendance_percentage',
+		header: 'Attendance',
+	},
+	{
+		accessorKey: 'attended_at',
+		header: 'Attended On',
+	},
+	
 ];
 
-
-
 const csvOptions = {
-  fieldSeparator: ',',
-  quoteStrings: '"',
-  decimalSeparator: '.',
-  showLabels: true,
-  useBom: true,
-  useKeysAsHeaders: false,
-  headers: columns.map((c) => c.header),
+fieldSeparator: ',',
+quoteStrings: '"',
+decimalSeparator: '.',
+showLabels: true,
+useBom: true,
+useKeysAsHeaders: true,
+headers: columns.map((c) => c.header),
 };
 
 const csvExporter = new ExportToCsv(csvOptions);
 
-function StudentTable(props) {
-  console.log("Props ----->", props.data)
-  const data = props.data  
-  const handleExportRows = (rows) => {
-    csvExporter.generateCsv(rows.map((row) => row.original));
-  };
+	
+function StudentTable({data}) {
 
-  const handleExportData = () => {
-    csvExporter.generateCsv(data);
-  };
+	const handleExportData = () => {
+		csvExporter.generateCsv(data);
+	};
 
   return (
     <MaterialReactTable
       columns={columns}
       data={data}
-    //   enableRowSelection
       positionToolbarAlertBanner="bottom"
-      renderTopToolbarCustomActions={({ table }) => (
+      renderTopToolbarCustomActions={() => (
         <Box
-          sx={{ display: 'flex', gap: '1rem', p: '0.5rem', flexWrap: 'wrap' }}
+          sx={{ display: 'flex', gap: '1rem', px: '1rem', py: '0.5rem', flexWrap: 'wrap' }}
         >
           <Button
             color="primary"
-            //export all data that is currently in the table (ignore pagination, sorting, filtering, etc.)
             onClick={handleExportData}
             startIcon={<FileDownloadIcon />}
             variant="contained"
           >
-            Export All Data
-          </Button>
-          <Button
-            disabled={table.getPrePaginationRowModel().rows.length === 0}
-            //export all rows, including from the next page, (still respects filtering and sorting)
-            onClick={() =>
-              handleExportRows(table.getPrePaginationRowModel().rows)
-            }
-            startIcon={<FileDownloadIcon />}
-            variant="contained"
-          >
-            Export All Rows
-          </Button>
-          <Button
-            disabled={table.getRowModel().rows.length === 0}
-            //export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
-            onClick={() => handleExportRows(table.getRowModel().rows)}
-            startIcon={<FileDownloadIcon />}
-            variant="contained"
-          >
-            Export Page Rows
-          </Button>
-          <Button
-            disabled={
-              !table.getIsSomeRowsSelected() && !table.getIsAllRowsSelected()
-            }
-            //only export selected rows
-            onClick={() => handleExportRows(table.getSelectedRowModel().rows)}
-            startIcon={<FileDownloadIcon />}
-            variant="contained"
-          >
-            Export Selected Rows
-          </Button>
+			Download
+			</Button>
         </Box>
       )}
     />

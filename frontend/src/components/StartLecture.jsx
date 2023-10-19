@@ -3,8 +3,12 @@ import { format, addMinutes, setHours, setMinutes, parse, isBefore, isPast, isSa
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Modal from './Modal'
+import useLoginStatus from './hooks/useLoginStatus';
 
 export default function StartLecture() {
+
+	useLoginStatus();
+
 	const [branch, setbranch] = useState(null);
 	const [sem, setsem] = useState(null);
 	const [div, setdiv] = useState(null);
@@ -104,15 +108,6 @@ export default function StartLecture() {
 
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		axios.get('http://localhost:3001/teacher/login',
-		{
-			withCredentials: true,
-			baseURL: 'http://localhost:3001/'
-		})
-		.catch(() => navigate('/login'))
-	}, [])
-	
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	const openModal = () => {
@@ -137,7 +132,7 @@ export default function StartLecture() {
 				</select>
 				<h1 className='text-xl flex justify-end text-blue-900 mr-7'> Select Semester: </h1>
 				<select value={sem} onChange={(e) => setsem(e.target.value)} name="branch" id="semester" className='rounded-lg border bg-blue-50 outline-none focus:ring-1 focus:ring-blue-500 py-1 px-2 mr-10'>
-					<option value=" " >Semester</option>
+					<option value="" >Semester</option>
 					<option value="7">7</option>
 					{/* <option value="8">8</option> */}
 				</select>

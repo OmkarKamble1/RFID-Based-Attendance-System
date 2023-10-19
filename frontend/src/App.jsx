@@ -7,7 +7,7 @@ import Header from './components/partials/header'
 
 function App() {
   return (
-	<div className='overflow-x-hidden font-sans min-h-[calc(100vh-70px)] from-fuchsia-100 to-blue-100 bg-gradient-to-tl'>
+	<div className='overflow-x-hidden font-sans min-h-[calc(100vh-00px)] from-fuchsia-100 to-blue-100 bg-gradient-to-tl'>
 		<BrowserRouter>
 		<Header />
 			<Routes>

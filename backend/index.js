@@ -46,7 +46,7 @@ app.get('/teacher/login', loginMiddleware);
 app.post('/teacher/lecture/create', sessionCheckerMiddleware, createLecture);
 
 // # Lecture report
-app.post('/teacher/lecture/report', sessionCheckerMiddleware, lectureReport);
+app.post('/teacher/lecture/report', lectureReport);
 
 // # Lecture status
 app.post('/teacher/lecture/status', sessionCheckerMiddleware, lectureStatus);

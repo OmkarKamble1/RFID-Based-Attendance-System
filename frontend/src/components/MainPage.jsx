@@ -1,19 +1,12 @@
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios';
+import useLoginStatus from './hooks/useLoginStatus';
 
 export default function () {
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		axios.get('http://localhost:3001/teacher/login',
-		{
-			withCredentials: true,
-			baseURL: 'http://localhost:3001/'
-		})
-		.then(() => navigate('/'))
-		.catch(() => navigate('/login'))
-	}, [])
+	useLoginStatus();
 	
   return (
     <div className='min-h-[calc(100vh-70px)] flex items-center justify-center'>   
