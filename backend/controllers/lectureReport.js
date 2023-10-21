@@ -30,23 +30,30 @@ const lectureReport = async (req, res) => {
 
 	const mergedArr = [].concat(...attendanceArr);
 
-	const { rows: totalLectures } = await query('SELECT COUNT(*) FROM lecture_session WHERE branch = $1 AND sem = $2 AND div = $3 AND subject = $4', [branch, sem, division, subject]);
+	const { rows: totalLecturesSubject } = await query('SELECT COUNT(*) FROM lecture_session WHERE branch = $1 AND sem = $2 AND div = $3 AND subject = $4', [branch, sem, division, subject]);
 
-	const resultArr = await Promise.all(mergedArr.map(async (studentData) => {
+	const { rows: totalLectures } = await query('SELECT COUNT(*) FROM lecture_session WHERE branch = $1 AND sem = $2 AND div = $3', [branch, sem, division]);
+
+	const resultArrSubject = await Promise.all(mergedArr.map(async (studentData) => {
 		
-		const { rows: studentLectures } = await query('SELECT COUNT(student.id)	FROM student JOIN (SELECT ad.student_id FROM attendance AS ad JOIN lecture_session AS l ON ad.lecture_id = l.lecture_id WHERE l.branch = $1 AND l.sem = $2 AND l.div = $3 AND l.subject = $4) AS subtable ON subtable.student_id = student.student_id WHERE student.id = $5', [branch, sem, division, subject, studentData.id]);
+		const { rows: studentLecturesSubject } = await query('SELECT COUNT(student.id)	FROM student JOIN (SELECT ad.student_id FROM attendance AS ad JOIN lecture_session AS l ON ad.lecture_id = l.lecture_id WHERE l.branch = $1 AND l.sem = $2 AND l.div = $3 AND l.subject = $4) AS subtable ON subtable.student_id = student.student_id WHERE student.id = $5', [branch, sem, division, subject, studentData.id]);
+
+		const { rows: studentLectures } = await query('SELECT COUNT(student.id)	FROM student JOIN (SELECT ad.student_id FROM attendance AS ad JOIN lecture_session AS l ON ad.lecture_id = l.lecture_id WHERE l.branch = $1 AND l.sem = $2 AND l.div = $3) AS subtable ON subtable.student_id = student.student_id WHERE student.id = $4', [branch, sem, division, studentData.id]);
 
 		return {
 			...studentData,
-			attendance_percentage: `${(studentLectures[0].count / totalLectures[0].count) * 100}%`
+			attendance_percentage: `${(studentLecturesSubject[0].count / totalLecturesSubject[0].count) * 100}%`,
+			overall_attendance_percentage: `${((studentLectures[0].count / totalLectures[0].count) * 100).toFixed(2)}%`
 		}
 
 	}));
 
+	
+
 	res.status(200).json({
 		success: true,
 		message: 'Lecture reports fetched successfully',
-		data: resultArr
+		data: resultArrSubject
 	});
 
 }

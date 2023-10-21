@@ -11,7 +11,6 @@ const useLoginStatus = () => {
         withCredentials: true,
         baseURL: 'http://localhost:3001/',
       })
-      .then(() => navigate('/'))
       .catch(() => navigate('/login'));
   }, [navigate]);
 };

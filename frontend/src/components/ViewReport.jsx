@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import StudentTable from './StudentTable'
 import axios from 'axios';
 import useLoginStatus from './hooks/useLoginStatus'
+import { useNavigate } from 'react-router-dom';
 
 export default function ViewReport() {
 
@@ -15,6 +16,7 @@ export default function ViewReport() {
 	const [isloading, setisloading] = useState(true);
 	const [isfilled, setisfilled] = useState(true);
 
+	const navigate = useNavigate();
 
 
 	const [data, setdata] = useState([]);
@@ -39,6 +41,10 @@ export default function ViewReport() {
 				setisloading(false);
 			})
 			.catch((e) => {
+				if(e.response.data.message === 'User not logged in'){
+					navigate('/login')
+					return;
+				}
 				window.alert(e.response.data.message);
 				setisloading(true);
 				setisfilled(true)
@@ -103,7 +109,7 @@ export default function ViewReport() {
 		{
 			!isfilled ? 
 			<div className='bg-white min-h-[280px] m-6 rounded-xl mb-10'>
-			{!isloading ? <StudentTable data={data} /> : <div className='flex w-full h-[280px] items-center justify-center gap-2 flex-col'><img className='aspect-square w-10' src='loading.gif'/><h1>Loading...</h1></div>}
+			{!isloading ? <StudentTable data={data} b={b} s={s} d={d} sub={sub} date={date} /> : <div className='flex w-full h-[280px] items-center justify-center gap-2 flex-col'><img className='aspect-square w-10' src='loading.gif'/><h1>Loading...</h1></div>}
 			</div> 
 			: 
 			<div className='flex items-center justify-center font-semibold italic text-3xl text-blue-900 opacity-80 min-h-[280px] m-6 rounded-xl mb-10'>

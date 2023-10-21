@@ -20,30 +20,38 @@ const columns = [
 	},
 	{
 		accessorKey: 'attendance_percentage',
-		header: 'Attendance',
+		header: 'Subject Attendance',
+	},
+	{
+		accessorKey: 'overall_attendance_percentage',
+		header: 'Overall Attendance',
 	},
 	{
 		accessorKey: 'attended_at',
 		header: 'Attended On',
 	},
 	
+	
 ];
 
-const csvOptions = {
-fieldSeparator: ',',
-quoteStrings: '"',
-decimalSeparator: '.',
-showLabels: true,
-useBom: true,
-useKeysAsHeaders: true,
-headers: columns.map((c) => c.header),
-};
-
-const csvExporter = new ExportToCsv(csvOptions);
+	
+function StudentTable({ data, b, s, d, sub, date }) {
 
 	
-function StudentTable({data}) {
+	const csvOptions = {
+		fieldSeparator: ',',
+		quoteStrings: '"',
+		decimalSeparator: '.',
+		showLabels: true,
+		useBom: true,
+		useKeysAsHeaders: true,
+		headers: columns.map((c) => c.header),
+		filename: `${b}_${s}_${d}_${sub}_${date}`
+	};
+	
+	const csvExporter = new ExportToCsv(csvOptions);
 
+	
 	const handleExportData = () => {
 		csvExporter.generateCsv(data);
 	};
