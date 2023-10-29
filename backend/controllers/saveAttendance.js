@@ -16,7 +16,7 @@ const saveAttendance = async (req, res) => {
 	if(studentRow == 0){
 		res.status(404).json({
 			success: false,
-			message: "Unregistered"
+			message: "Not registered"
 		})
 		return;
 	}
@@ -28,7 +28,7 @@ const saveAttendance = async (req, res) => {
 	if(sessionRow.length <= 0) {
 		res.status(403).json({
 			success: false,
-			message: "No active lecture found"
+			message: "No active lec"
 		})
 		return;
 	}
@@ -40,7 +40,7 @@ const saveAttendance = async (req, res) => {
 	if(attendanceRow.length > 0){
 		res.status(401).json({
 			success: false,
-			message: "Attendance already saved"
+			message: "Already saved"
 		})
 		return;
 	}

@@ -11,14 +11,17 @@ MFRC522::MIFARE_Key key;
 SoftwareSerial ArduinoUno(3,2);
 
 void setup() {
+  
   Serial.begin(9600);
   ArduinoUno.begin(4800);
   for (byte i = 0; i < 6; i++) key.keyByte[i] = 0xFF;
 
   SPI.begin();
-  mfrc522.PCD_Init(); 
+
+  mfrc522.PCD_Init();
 
   Serial.println("Ready to read !");
+
 }
 
 int blockNumber = 2;
