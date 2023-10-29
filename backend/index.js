@@ -9,8 +9,8 @@ import createLecture from './controllers/createLecture.js';
 import cookieParser from 'cookie-parser';
 import { hardwareMiddleware, loginMiddleware, sessionCheckerMiddleware } from './middlewares/index.js';
 import lectureReport from './controllers/lectureReport.js';
-import lectureStatus from './controllers/lectureStatus.js';
 import { format } from 'date-fns';
+import studentAttendanceReport from './controllers/studentAttendanceReport.js';
 
 dotenv.config();
 
@@ -49,7 +49,10 @@ app.post('/teacher/lecture/create', sessionCheckerMiddleware, createLecture);
 app.post('/teacher/lecture/report', sessionCheckerMiddleware, lectureReport);
 
 // # Lecture status
-app.post('/teacher/lecture/status', sessionCheckerMiddleware, lectureStatus);
+app.post('/student/studentAttendanceReport', studentAttendanceReport);
+
+
+
 
 // # Test route
 app.post('/test', hardwareMiddleware, async (req, res) => {

@@ -4,6 +4,7 @@ import MainPage from "./components/MainPage";
 import StartLecture from "./components/StartLecture";
 import ViewReport from "./components/ViewReport";
 import Header from './components/partials/header'
+import StudentReport from './components/StudentReport';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
 				<Route exact path='/' element={<MainPage />} />
 				<Route exact path='/lecture' element={<StartLecture />} />
 				<Route exact path='/report' element={<ViewReport />} />
+				<Route exact path='/a/:id' element={<StudentReport />} />
 				<Route path='/*' element={<div className='h-full flex items-center justify-center flex-col font-semibold text-2xl mt-20'><h1>404</h1><h1>NOT FOUND</h1></div>} />
 			</Routes>
 		</BrowserRouter>
