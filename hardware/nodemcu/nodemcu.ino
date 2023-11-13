@@ -12,11 +12,11 @@ HTTPClient http;
 
 LiquidCrystal_I2C lcd(0x3F, 16, 2);
 
-const char* ssid = "Searching";
-const char* password = "ertiga@8789";
+const char* ssid = "Omkar's Samsung";
+const char* password = "password1";
 
 
-const String serverURL2 = "http://192.168.0.114:3001/saveAttendance/";
+const String serverURL2 = "http://192.168.240.100:3001/saveAttendance/";
 
 
 void setup() {
